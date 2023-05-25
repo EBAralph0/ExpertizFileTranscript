@@ -15,11 +15,13 @@ public class UserTraitement {
     private UserInterface userInterface;
 	
 	public void create(){
+		System.out.println("ikdjksdjksdjksd");
         User u = new User();
         u.setLogin("login");
         u.setPassword("password");
         u.setNom("AAAAAAA");
         userInterface.create(u);
+        
     }
 
 }

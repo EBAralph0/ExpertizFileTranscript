@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="">
+	</ui:composition>
+	
+	<h:head></h:head> 
+	
+	<h:body> 
+		Hello World!
+		
+		<h:commandButton value="insert" action="#{userTraitement.create()}"/>
+		<button type="button" action="#{userTraitement.create()}">HER233</button>
+		
+		
+		<h:form id="form">
+				<table cellspacing="4" cellpadding="2" style="width:100%; margin: 0; background-color: #F1F1F1;">
+					<tr>
+						<td style="width: 25%; font-weight: bold;"><h:outputText value="LOH" /></td>
+						<td><h:inputText value="login" required="false" id="txtLogin" requiredMessage="" styleClass="champText"/></td>
+					</tr>
+					<tr>
+						<td style="width: 25%; font-weight: bold;"><h:outputText value="PQSS" /></td>
+						<td><h:inputSecret value="password" required="false" id="txtPwd" requiredMessage="" styleClass="champText"/></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							<h:commandButton value="VALIDER" actionListener="#{userTraitement.create()}" ajax="true" update="growl"/>
+							<h:commandButton value="ANNULER"/>
+							
+						</td>
+					</tr>
+					
+					
+				</table>
+		</h:form>
+	</h:body> 
+</html>
