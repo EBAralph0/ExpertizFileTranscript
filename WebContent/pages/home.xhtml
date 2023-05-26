@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	
+	<h:head>
+		<h:outputStylesheet library="primefaces" name="primefaces.css" />
+    	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+    	<h:outputScript library="primefaces" name="primefaces.js" />
+	</h:head>
+	<h:body>
+    <div class="card">
+    	<p:commandButton icon="pi pi-arrow-right" type="button" onclick="PF('sidebar1').show()" styleClass="mr-2" />
+	    <p:sidebar widgetVar="sidebar1" id="sidebar1" styleClass="sidebar" visible="true">
+            <p:menuitem value="Page 1" url="page1.xhtml" />
+            <p:menuitem value="Page 2" url="page2.xhtml" />
+            <p:menuitem value="Page 3" url="page3.xhtml" />
+    	</p:sidebar>
+	</div>
+</h:body></html>

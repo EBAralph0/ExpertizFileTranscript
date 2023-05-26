@@ -14,7 +14,6 @@
 			<property name="hibernate.cache.use_second_level_cache" value="true"/>
 			<!-- property name="hibernate.connection.release_mode" value="after_transaction"/-->
 			<property name="hibernate.transaction.auto_close" value="true" />
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		</properties>
 	</persistence-unit>
 </persistence>

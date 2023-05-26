@@ -15,7 +15,7 @@ public interface UserInterface {
     public void remove(int id);
     public User getUser(int id);
     public List<User> getAllUsers();
-	public User LoginUser(String login, String password);
+	public User Login(String login, String password);
 	public long count();
 
 }

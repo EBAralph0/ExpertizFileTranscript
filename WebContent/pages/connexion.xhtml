@@ -2,41 +2,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://primefaces.org/ui">
 
-	<ui:composition template="">
-	</ui:composition>
+	<f:view
+	locale="#{toobarController.langue==null?'fr':toobarController.langue}">
+	 <h:head>
+	 	<h:outputStylesheet library="primefaces" name="primefaces.css" />
+    	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+    	<h:outputScript library="primefaces" name="primefaces.js" />
+     	<title>Connexion</title>
+     	<style>
+			.centered-form {
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    height: 100vh;
+			}
+			.centered-form{
+			display: flex;
+			flex-direction: column;
+			}
+			.ui-fluid{
+			margin: 16px;
+			
+			}
+		</style>
+	    
+     </h:head>
+	 <body style="">	
+		<h:form styleClass="centered-form">
+			<div id="errorContainer"></div>
+		    <p:messages id="messages" globalOnly="true" showDetail="true" showSummary="false"/>
+		    <h:message for="login" style="color: red" globalOnly="false" />
+		    <h:message for="password" style="color: red" globalOnly="false" />
+		    
+		    <p:panelGrid columns="2" styleClass="ui-fluid" style="border: none;">
+			    <p:outputLabel for="login" value="Login:" />
+			    <p:inputText id="login" value="#{userTraitement.userLogin}" required="true" />
+			
+			    <p:outputLabel for="password" value="Mot de passe:" />
+			    <p:password id="password" value="#{userTraitement.userPassword}" required="true" />
+			</p:panelGrid>
+
+		
+		    <p:commandButton value="Se connecter" action="#{userTraitement.login}" />
 	
-	<h:head></h:head> 
-	
-	<h:body> 
-		Hello World!
-		
-		<h:commandButton value="insert" action="#{userTraitement.create()}"/>
-		<button type="button" action="#{userTraitement.create()}">HER233</button>
-		
-		
-		<h:form id="form">
-				<table cellspacing="4" cellpadding="2" style="width:100%; margin: 0; background-color: #F1F1F1;">
-					<tr>
-						<td style="width: 25%; font-weight: bold;"><h:outputText value="LOH" /></td>
-						<td><h:inputText value="login" required="false" id="txtLogin" requiredMessage="" styleClass="champText"/></td>
-					</tr>
-					<tr>
-						<td style="width: 25%; font-weight: bold;"><h:outputText value="PQSS" /></td>
-						<td><h:inputSecret value="password" required="false" id="txtPwd" requiredMessage="" styleClass="champText"/></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-							<h:commandButton value="VALIDER" actionListener="#{userTraitement.create()}" ajax="true" update="growl"/>
-							<h:commandButton value="ANNULER"/>
-							
-						</td>
-					</tr>
-					
-					
-				</table>
 		</h:form>
-	</h:body> 
+
+    
+<script>
+    function showErrorMessage(message) {
+        var errorContainer = document.getElementById('errorContainer');
+        errorContainer.innerHTML = '<span style="color: red;">' + message + '</span>';
+    }
+</script>
+    
+	</body>
+	</f:view> 
 </html>

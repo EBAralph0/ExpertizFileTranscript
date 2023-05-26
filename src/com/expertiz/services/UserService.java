@@ -50,15 +50,23 @@ public class UserService implements UserInterface {
 	}
 
 	@Override
-	public User LoginUser(String login, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public long count() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public User Login(String login, String password) {
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.login = :login AND u.password = :password");
+	    query.setParameter("login", login);
+	    query.setParameter("password", password);
+	    
+	    List<User> results = query.getResultList();
+	    if (results.isEmpty()) {
+	        return null; // Login échoué
+	    } else {
+	        return results.get(0); // Renvoie l'utilisateur trouvé
+	    }
 	}
 
 }
