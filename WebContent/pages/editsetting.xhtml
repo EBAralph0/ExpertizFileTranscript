@@ -1,0 +1,27 @@
+<ui:composition template="/pages/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+      			xmlns:ui="http://java.sun.com/jsf/facelets"
+		     	xmlns:f="http://java.sun.com/jsf/core"
+		      	xmlns:h="http://java.sun.com/jsf/html"
+		      	xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h1>EDIT</h1>
+        <h:form>
+        <h:inputHidden value="#{userTraitement.userId}" />
+            <p:panelGrid columns="2">
+            	
+                <p:outputLabel for="e-name" value="Nom:" />
+                <p:inputText id="e-name" value="#{userTraitement.userName}" />
+
+                <p:outputLabel for="e-login" value="Login:" />
+                <p:inputText id="e-login" value="#{userTraitement.userLogin}" />
+
+                <p:outputLabel for="e-password" value="Mot de passe:" />
+                <p:password id="e-password" value="#{userTraitement.userPassword}" />
+            </p:panelGrid>
+            <p:commandButton value="Enregistrer" action="#{userTraitement.edit}" />
+
+        </h:form>
+    </ui:define>
+</ui:composition>
