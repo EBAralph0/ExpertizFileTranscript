@@ -26,10 +26,9 @@
 			}
 			.ui-fluid{
 			margin: 16px;
-			
 			}
 		</style>
-	    
+
      </h:head>
 	 <body style="">	
 		<h:form styleClass="centered-form">
@@ -46,18 +45,16 @@
 			    <p:password id="password" value="#{userTraitement.userPassword}" required="true" />
 			</p:panelGrid>
 
-		
 		    <p:commandButton value="Se connecter" action="#{userTraitement.login}" />
-	
+
 		</h:form>
 
-    
-<script>
-    function showErrorMessage(message) {
-        var errorContainer = document.getElementById('errorContainer');
-        errorContainer.innerHTML = '<span style="color: red;">' + message + '</span>';
-    }
-</script>
+		<script>
+		    function showErrorMessage(message) {
+		        var errorContainer = document.getElementById('errorContainer');
+		        errorContainer.innerHTML = '<span style="color: red;">' + message + '</span>';
+		    }
+		</script>
     
 	</body>
 	</f:view> 

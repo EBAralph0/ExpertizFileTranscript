@@ -14,6 +14,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/HIGH-TECH CORP&apos;S/Downloads/primefaces-12.0.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

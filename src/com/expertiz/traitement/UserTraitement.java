@@ -79,7 +79,6 @@ public class UserTraitement implements Serializable {
 	}
 
 
-
 	public void login() {
 		User user = userInterface.Login(userLogin, userPassword);
 	    
@@ -93,6 +92,7 @@ public class UserTraitement implements Serializable {
 	            ExternalContext externalContext = context.getExternalContext();
 	            HttpSession session = (HttpSession) externalContext.getSession(false);
 				session.setAttribute("userId", user.getId());
+				loadUser();
 	        } catch (IOException e) {
 	            e.printStackTrace(); 
 	        }
@@ -139,7 +139,5 @@ public class UserTraitement implements Serializable {
 	        e.printStackTrace();
 	    }
 	}
-
-
 
 }
