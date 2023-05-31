@@ -27,11 +27,29 @@
 			.ui-fluid{
 			margin: 16px;
 			}
+			.logo{
+				width:30%;
+				text-align: left;
+				margin: 8% 35% 2% 35%;
+			}
+			.content-all{
+			width: 100%;
+			height: 100%;
+			display:flex;
+			flex-flow: column;
+			justify-content: center;
+			align-items: center;
+			}
 		</style>
 
      </h:head>
-	 <body style="">	
-		<h:form styleClass="centered-form">
+	 <body style="">
+	 <div class="content-all">
+	 	
+	 	<h:form styleClass="centered-form">
+	 		<div class="logo">
+				<h:graphicImage value="/images/logo.png" />
+			</div>
 			<div id="errorContainer"></div>
 		    <p:messages id="messages" globalOnly="true" showDetail="true" showSummary="false"/>
 		    <h:message for="login" style="color: red" globalOnly="false" />
@@ -48,12 +66,14 @@
 		    <p:commandButton value="Se connecter" action="#{userTraitement.login}" />
 
 		</h:form>
-
+	 </div>	
+		
 		<script>
 		    function showErrorMessage(message) {
 		        var errorContainer = document.getElementById('errorContainer');
 		        errorContainer.innerHTML = '<span style="color: red;">' + message + '</span>';
 		    }
+
 		</script>
     
 	</body>

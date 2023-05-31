@@ -4,6 +4,7 @@
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
 	<jta-data-source>java:jboss/datasources/dsExpertizFileTranscript</jta-data-source>
 		<class>com.expertiz.entities.User</class>
+		<class>com.expertiz.entities.Setting</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>

@@ -1,0 +1,115 @@
+<ui:composition template="/pages/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="content">
+
+		<style>
+.edit-button {
+	background-color: orange;
+	color: white;
+}
+
+.delete-button {
+	background-color: red;
+	color: white;
+}
+</style>
+		<div class="content-all-crud">
+			<div class="create-btn-container">
+				<p:commandButton value="+ Add" onclick="PF('createDialog').show()" />
+			</div>
+			<div class="list-setting-container">
+				<h:form id="form">
+					<p:dataTable id="settingTable" widgetVar="settingTable"
+						value="#{serviceTraitement.allSettings}" var="setting">
+						<p:column headerText="ID">
+							<h:outputText value="#{setting.id}" />
+						</p:column>
+						<p:column headerText="Clé">
+							<h:outputText value="#{setting.cle}" />
+						</p:column>
+						<p:column headerText="Valeur">
+							<h:outputText value="#{setting.valeur}" />
+						</p:column>
+						<p:column headerText="Actions">
+							<p:commandButton value="Modifier"
+								action="#{serviceTraitement.editSetting(setting)}"
+								styleClass="edit-button" icon="pi pi-pencil"
+								onstart="PF('editDialog').show();" />
+							<p:commandButton value="Supprimer" styleClass="delete-button"
+							    icon="pi pi-trash" onclick="PF('confirmDeleteDialog').show();"
+							    update="confirmDeleteDialogForm" process="@this">
+							    <f:setPropertyActionListener
+							        target="#{serviceTraitement.selectedSettingToDelete}"
+							        value="#{setting}" />
+							    <p:ajax listener="#{serviceTraitement.deleteSetting(setting)}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+
+
+
+		<!-- Create Setting Dialog -->
+		<p:dialog id="createDialog" header="Create Setting"
+			widgetVar="createDialog" modal="true" resizable="false">
+			<h:form>
+				<p:panelGrid columns="2" styleClass="create-setting-grid">
+					<p:outputLabel for="cle" value="Clé:" />
+					<p:inputText id="cle" value="#{serviceTraitement.cle}"
+						required="true" />
+
+					<p:outputLabel for="valeur" value="Valeur:" />
+					<p:inputText id="valeur" value="#{serviceTraitement.valeur}"
+						required="true" />
+				</p:panelGrid>
+				<p:commandButton value="Submit"
+					action="#{serviceTraitement.createSetting}"
+					onstart="return validateFields()"
+					oncomplete="if (!args.validationFailed) PF('createDialog').hide()" />
+
+			</h:form>
+		</p:dialog>
+
+		<!-- Edit Setting Dialog -->
+		<p:dialog id="editDialog" header="Edit Setting" widgetVar="editDialog" modal="true" resizable="false" onshow="initializeEditDialog()" onShow="PF('editDialog').show()">
+		    <h:form id="editForm">
+				<p:panelGrid columns="2" styleClass="create-setting-grid">
+					<p:outputLabel for="editCle" value="Clé:" />
+					<p:inputText id="editCle"
+						value="#{serviceTraitement.selectedSetting.cle}" />
+
+					<p:outputLabel for="editValeur" value="Valeur:" />
+					<p:inputText id="editValeur"
+						value="#{serviceTraitement.selectedSetting.valeur}" />
+				</p:panelGrid>
+				<p:commandButton value="Submit"
+					action="#{serviceTraitement.editSetting}"
+					oncomplete="PF('editDialog').hide()" />
+			</h:form>
+		</p:dialog>
+
+		<!-- Confirm delete modal -->
+		<p:dialog id="confirmDeleteDialog" header="Confirmation"
+			widgetVar="confirmDeleteDialog" modal="true" resizable="false">
+			<h:form id="confirmDeleteDialogForm">
+				<h:outputText value="Voulez-vous vraiment supprimer ce paramètre ?" />
+
+				<p:commandButton value="Oui"
+					action="#{serviceTraitement.confirmDeleteSetting}"
+					oncomplete="PF('confirmDeleteDialog').hide();" process="@this"
+					update="form:settingTable" />
+				<p:commandButton value="Non"
+					onclick="PF('confirmDeleteDialog').hide();" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

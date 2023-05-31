@@ -92,7 +92,9 @@ public class UserTraitement implements Serializable {
 	            ExternalContext externalContext = context.getExternalContext();
 	            HttpSession session = (HttpSession) externalContext.getSession(false);
 				session.setAttribute("userId", user.getId());
-				loadUser();
+				userName = user.getNom();
+				userLogin=user.getLogin();
+				userPassword=user.getPassword();
 	        } catch (IOException e) {
 	            e.printStackTrace(); 
 	        }
@@ -135,6 +137,17 @@ public class UserTraitement implements Serializable {
 	    // Redirection vers la page d'accueil ou une autre page appropriée
 	    try {
 	        externalContext.redirect(externalContext.getRequestContextPath() + "/pages/home.xhtml");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void logout() {
+	    try {
+	        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	        HttpSession session = (HttpSession) externalContext.getSession(false);
+	        session.invalidate();
+	        externalContext.redirect(externalContext.getRequestContextPath() + "/pages/connexion.xhtml");
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }

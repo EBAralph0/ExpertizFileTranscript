@@ -1,27 +1,87 @@
 <ui:composition template="/pages/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-      			xmlns:ui="http://java.sun.com/jsf/facelets"
-		     	xmlns:f="http://java.sun.com/jsf/core"
-		      	xmlns:h="http://java.sun.com/jsf/html"
-		      	xmlns:p="http://primefaces.org/ui">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="content">
-        <h1>EDIT</h1>
-        <h:form>
-        <h:inputHidden value="#{userTraitement.userId}" />
-            <p:panelGrid columns="2">
-            	
-                <p:outputLabel for="e-name" value="Nom:" />
-                <p:inputText id="e-name" value="#{userTraitement.userName}" />
+	<ui:define name="content">
+			<style>
+.edit-form {
+	max-width: 400px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #f5f5f5;
+	border-radius: 5px;
+}
 
-                <p:outputLabel for="e-login" value="Login:" />
-                <p:inputText id="e-login" value="#{userTraitement.userLogin}" />
+.edit-form h1 {
+	text-align: center;
+	margin-bottom: 20px;
+}
 
-                <p:outputLabel for="e-password" value="Mot de passe:" />
-                <p:password id="e-password" value="#{userTraitement.userPassword}" />
-            </p:panelGrid>
-            <p:commandButton value="Enregistrer" action="#{userTraitement.edit}" />
+.edit-form .form-group {
+	margin-bottom: 20px;
+}
 
-        </h:form>
-    </ui:define>
+.edit-form .form-group label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.edit-form .form-group input[type="text"], .edit-form .form-group input[type="password"]
+	{
+	width: 100%;
+	padding: 8px;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.edit-form .form-group input[type="password"] {
+	font-family: monospace;
+}
+
+.edit-form .btn-save {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #007bff;
+	border: none;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 16px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.edit-form .btn-save:hover {
+	background-color: #0056b3;
+}
+</style>
+		<div class="edit-form">
+			<h1>EDIT</h1>
+			<h:form>
+				<h:inputHidden value="#{userTraitement.userId}" />
+
+				<div class="form-group">
+					<label for="e-name">Nom:</label>
+					<p:inputText id="e-name" value="#{userTraitement.userName}" />
+				</div>
+
+				<div class="form-group">
+					<label for="e-login">Login:</label>
+					<p:inputText id="e-login" value="#{userTraitement.userLogin}" />
+				</div>
+
+				<div class="form-group">
+					<label for="e-password">Mot de passe:</label>
+					<p:password id="e-password" value="#{userTraitement.userPassword}" />
+				</div>
+
+				<p:commandButton value="Enregistrer" action="#{userTraitement.edit}"
+					styleClass="btn-save" />
+			</h:form>
+		</div>
+	</ui:define>
 </ui:composition>

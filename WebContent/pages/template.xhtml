@@ -9,34 +9,82 @@
     <h:outputStylesheet library="primefaces" name="primefaces.css" />
     <h:outputScript library="primefaces" name="jquery/jquery.js" />
     <h:outputScript library="primefaces" name="primefaces.js" />
+    <style>
+    	.content-logo-menu{
+    		display: flex;
+    		margin-bottom:8px;
+    		width:100%;
+    		height: 52px;
+    		border-top: solid;
+    		border-bottom: solid;
+    	}
+    	.ui-menubar {
+    		width: inherit;
+    		border: none;
+		}
+		.logo-bar{
+			height: inherit;
+			width: auto;
+			background: #eeeeee;
+		}
+		.logo-img{height: inherit;
+		width: inherit;}
+		.ui-widget-content{border: none;}
+    </style>
 </h:head>
 
 <h:body>
     <p:growl id="messages"/>
- 
-    <p:menubar>
-        <p:submenu label="File" icon="pi pi-file">
-            <p:submenu label="New" icon="pi pi-briefcase">
-                <p:menuitem value="File" url="#" />
-                <p:menuitem value="Folder" url="#" />
+    <div class="content-logo-menu">
+        <div class="logo-bar">
+            <p:commandLink class="logo-img" action="/pages/home.xhtml">
+                <h:graphicImage value="/images/logo.png" class="logo-img" />
+            </p:commandLink>
+        </div>
+        <p:menubar>
+            <p:submenu label="File" icon="pi pi-file" style="width:inherit">
+                <p:submenu label="New" icon="pi pi-briefcase">
+                    <p:menuitem value="File" url="#" />
+                    <p:menuitem value="Folder" url="#" />
+                </p:submenu>
+                <p:submenu label="Old" icon="pi pi-briefcase">
+                    <p:menuitem value="File" url="#" />
+                    <p:menuitem value="Folder" url="#" />
+                </p:submenu>
             </p:submenu>
-            <p:submenu label="Old" icon="pi pi-briefcase">
-                <p:menuitem value="File" url="#" />
-                <p:menuitem value="Folder" url="#" />
+ 
+            <p:submenu label="Setting" icon="pi pi-cog">
+                <p:menuitem value="Edit" url="editsetting.xhtml" icon="pi pi-angle-double-left" />
+                <p:menuitem value="Treatment" url="setting.xhtml" icon="pi pi-angle-double-left" />
             </p:submenu>
-            
-        </p:submenu>
  
-        <p:submenu label="Setting" icon="pi pi-cog">
-            <p:menuitem value="Edit" url="editsetting.xhtml" icon="pi pi-angle-double-left" />
-        </p:submenu>
- 
-        <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-            <p:commandButton type="button" value="Logout" icon="pi pi-home" />
-        </f:facet>
-    </p:menubar>
+            <f:facet name="options">
+                <p:outputLabel value="Welcome, #{userTraitement.userName} " style="margin-right: 10px;" />
+                <p:commandButton value="Logout" icon="pi pi-home" action="#{userTraitement.logout}" />
+            </f:facet>
+        </p:menubar>
+    </div>
     <ui:insert name="content"/>
+    <script type="text/javascript">
+    function initializeEditDialog() {
+        console.log("1111111");
+        var cleInput = document.getElementById('editForm:editCle');
+        var valeurInput = document.getElementById('editForm:editValeur');
+        var selectedSetting = PF('settingTable').getSelectedRowData();
+
+        if (selectedSetting) {
+            cleInput.value = selectedSetting.cle;
+            valeurInput.value = selectedSetting.valeur;
+        }
+    }
+	 	// Appel de la fonction d'initialisation après le chargement de la page
+	    document.addEventListener('DOMContentLoaded', function() {
+        initializeEditDialog();
+    });
+</script>
+
 </h:body>
+
+
 
 </html>
