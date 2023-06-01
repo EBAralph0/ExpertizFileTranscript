@@ -25,7 +25,6 @@ import com.expertiz.services.SettingInterface;
 public class ServiceTraitement implements Serializable {
     private Setting selectedSettingToDelete;
 
-
 	/**
 	 * 
 	 */
@@ -86,6 +85,7 @@ public class ServiceTraitement implements Serializable {
 	public void setSelectedSettingToDelete(Setting selectedSettingToDelete) {
 		this.selectedSettingToDelete = selectedSettingToDelete;
 	}
+	
 	private List<Setting> allSettings;
 	
 	
@@ -120,9 +120,21 @@ public class ServiceTraitement implements Serializable {
             e.printStackTrace();
         }
 	}
+	
+	public void selectSettingForEdit(Setting setting) {
+	    this.selectedSetting = setting;
+	}
 
     public void editSetting(Setting setting) {
         settingInterface.update(setting);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Le réglage a été modifié avec succès."));
+
+        selectedSetting = null;
+
+        PrimeFaces.current().ajax().update(":form:settingTable");
+
+        PrimeFaces.current().executeScript("PF('editDialog').hide();");
+
     }
 
     public void deleteSetting(Setting setting) {

@@ -29,6 +29,27 @@ public class UserTraitement implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private User selectedUserToDelete;
+	private User selectedUser;
+	public User getSelectedUserToDelete() {
+		return selectedUserToDelete;
+	}
+
+
+	public void setSelectedUserToDelete(User selectedUserToDelete) {
+		this.selectedUserToDelete = selectedUserToDelete;
+	}
+
+
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
 	@EJB
     private UserInterface userInterface;
 	
@@ -77,6 +98,15 @@ public class UserTraitement implements Serializable {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
+	private List<User> allUsers;
+	
+	public List<User> getAllSettings() {
+        if (allUsers == null) {
+        	allUsers = userInterface.getAllUsers();
+        }
+        return allUsers;
+    }
 
 
 	public void login() {

@@ -66,21 +66,15 @@
     </div>
     <ui:insert name="content"/>
     <script type="text/javascript">
-    function initializeEditDialog() {
-        console.log("1111111");
+    function openEditDialog(cle, valeur) {
         var cleInput = document.getElementById('editForm:editCle');
         var valeurInput = document.getElementById('editForm:editValeur');
-        var selectedSetting = PF('settingTable').getSelectedRowData();
 
-        if (selectedSetting) {
-            cleInput.value = selectedSetting.cle;
-            valeurInput.value = selectedSetting.valeur;
-        }
+        cleInput.value = cle;
+        valeurInput.value = valeur;
+
+        PF('editDialog').show();
     }
-	 	// Appel de la fonction d'initialisation après le chargement de la page
-	    document.addEventListener('DOMContentLoaded', function() {
-        initializeEditDialog();
-    });
 </script>
 
 </h:body>
