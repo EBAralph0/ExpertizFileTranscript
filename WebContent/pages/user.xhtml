@@ -23,78 +23,88 @@
 			</div>
 			<div class="list-setting-container">
 				<h:form id="form">
-					<p:dataTable id="settingTable" widgetVar="settingTable"
-						value="#{serviceTraitement.allSettings}" var="setting">
+					<p:dataTable id="userTable" widgetVar="userTable"
+						value="#{userTraitement.allUsers}" var="user">
 						<p:column headerText="ID">
-							<h:outputText value="#{setting.id}" />
+							<h:outputText value="#{user.id}" />
 						</p:column>
-						<p:column headerText="Clé">
-							<h:outputText value="#{setting.cle}" />
+						<p:column headerText="Nom">
+							<h:outputText value="#{user.nom}" />
 						</p:column>
-						<p:column headerText="Valeur">
-							<h:outputText value="#{setting.valeur}" />
+						<p:column headerText="Login">
+							<h:outputText value="#{user.login}" />
+						</p:column>
+						<p:column headerText="Password">
+							<h:outputText value="********"
+								rendered="#{not empty user.password}" />
 						</p:column>
 						<p:column headerText="Actions">
 							<p:commandButton value="Modifier" styleClass="edit-button"
 								icon="pi pi-pencil"
-								onclick="openEditDialog('#{setting.cle}', '#{setting.valeur}')" >
+								onclick="openUserEditDialog('#{user.nom}','#{user.login}', '#{user.password}')">
 
-							<f:setPropertyActionListener
-								target="#{serviceTraitement.selectedSetting}" value="#{setting}" />
-							<p:ajax
-								listener="#{serviceTraitement.selectSettingForEdit(setting)}" />
+								<f:setPropertyActionListener
+									target="#{userTraitement.selectedUser}" value="#{user}" />
+								<p:ajax listener="#{userTraitement.selectUserForEdit(user)}" />
 							</p:commandButton>
-
 
 							<p:commandButton value="Supprimer" styleClass="delete-button"
 								icon="pi pi-trash" onclick="PF('confirmDeleteDialog').show();"
 								update="confirmDeleteDialogForm" process="@this">
 								<f:setPropertyActionListener
-									target="#{serviceTraitement.selectedSettingToDelete}"
-									value="#{setting}" />
-								<p:ajax listener="#{serviceTraitement.deleteSetting(setting)}" />
+									target="#{userTraitement.selectedUserToDelete}" value="#{user}" />
+								<p:ajax listener="#{userTraitement.deleteUser(user)}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</h:form>
 			</div>
+
 		</div>
 
-		<!-- Create Setting Dialog -->
-		<p:dialog id="createDialog" header="Create Setting"
+		<!-- Create User Dialog -->
+		<p:dialog id="createDialog" header="Create User"
 			widgetVar="createDialog" modal="true" resizable="false">
 			<h:form>
 				<p:panelGrid columns="2" styleClass="create-setting-grid">
-					<p:outputLabel for="cle" value="Clé:" />
-					<p:inputText id="cle" value="#{serviceTraitement.cle}"
+					<p:outputLabel for="nom" value="Nom:" />
+					<p:inputText id="nom" value="#{userTraitement.userName}"
 						required="true" />
 
-					<p:outputLabel for="valeur" value="Valeur:" />
-					<p:inputText id="valeur" value="#{serviceTraitement.valeur}"
+					<p:outputLabel for="login" value="Login:" />
+					<p:inputText id="login" value="#{userTraitement.userLogin}"
+						required="true" />
+
+					<p:outputLabel for="password" value="Password:" />
+					<p:inputText id="password" value="#{userTraitement.userPassword}"
 						required="true" />
 				</p:panelGrid>
 				<p:commandButton value="Submit"
-					action="#{serviceTraitement.createSetting}"
+					action="#{userTraitement.createUser}"
 					onstart="return validateFields()"
 					oncomplete="if (!args.validationFailed) PF('createDialog').hide()" />
 			</h:form>
 		</p:dialog>
 
-		<!-- Edit Setting Dialog -->
-		<p:dialog id="editDialog" header="Edit Setting" widgetVar="editDialog"
+		<!-- Edit User Dialog -->
+		<p:dialog id="editDialog" header="Edit User" widgetVar="editDialog"
 			modal="true" resizable="false">
 			<h:form id="editForm">
 				<p:panelGrid columns="2" styleClass="create-setting-grid">
-					<p:outputLabel for="editCle" value="Clé:" />
-					<p:inputText id="editCle"
-						value="#{serviceTraitement.selectedSetting.cle}" />
+					<p:outputLabel for="editNom" value="Nom:" />
+					<p:inputText id="editNom"
+						value="#{userTraitement.selectedUser.nom}" />
 
-					<p:outputLabel for="editValeur" value="Valeur:" />
-					<p:inputText id="editValeur"
-						value="#{serviceTraitement.selectedSetting.valeur}" />
+					<p:outputLabel for="editLogin" value="Login:" />
+					<p:inputText id="editLogin"
+						value="#{userTraitement.selectedUser.login}" />
+
+					<p:outputLabel for="editPassword" value="Password:" />
+					<p:inputText id="editPassword"
+						value="#{userTraitement.selectedUser.password}" />
 				</p:panelGrid>
 				<p:commandButton value="Submit"
-					action="#{serviceTraitement.editSetting(serviceTraitement.selectedSetting)}"
+					action="#{userTraitement.editUser(userTraitement.selectedUser)}"
 					oncomplete="PF('editDialog').hide()" />
 			</h:form>
 		</p:dialog>
@@ -103,12 +113,13 @@
 		<p:dialog id="confirmDeleteDialog" header="Confirmation"
 			widgetVar="confirmDeleteDialog" modal="true" resizable="false">
 			<h:form id="confirmDeleteDialogForm">
-				<h:outputText value="Voulez-vous vraiment supprimer ce paramètre ?" />
+				<h:outputText
+					value="Voulez-vous vraiment supprimer cet utilisateur ?" />
 
 				<p:commandButton value="Oui"
-					action="#{serviceTraitement.confirmDeleteSetting}"
+					action="#{userTraitement.confirmDeleteUser}"
 					oncomplete="PF('confirmDeleteDialog').hide();" process="@this"
-					update="form:settingTable" />
+					update="form:userTable" />
 				<p:commandButton value="Non"
 					onclick="PF('confirmDeleteDialog').hide();" />
 			</h:form>

@@ -10,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="User",schema="dsExpertizFileTranscript",uniqueConstraints={@UniqueConstraint(columnNames="login")})
+@NamedQuery(name = "User.getAll", query = "SELECT u FROM  User u")
 public class User implements Serializable {
 
 	   

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,7 +23,7 @@ import com.expertiz.services.UserInterface;
 import java.io.Serializable;
 
 @ManagedBean(name="userTraitement")
-@SessionScoped
+@ViewScoped
 public class UserTraitement implements Serializable {
 	/**
 	 * 
@@ -99,32 +100,106 @@ public class UserTraitement implements Serializable {
 		this.userId = userId;
 	}
 	
+	
 	private List<User> allUsers;
 	
-	public List<User> getAllSettings() {
+	
+	public List<User> getAllUsers() {
         if (allUsers == null) {
         	allUsers = userInterface.getAllUsers();
         }
         return allUsers;
     }
+	
+	public void createUser() {
+	    if (userName == null || userLogin == null || userPassword == null || userName.isEmpty() || userLogin.isEmpty() || userPassword.isEmpty()) {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Veuillez remplir tous les champs."));
+	        return;
+	    }
+
+	    User user = new User();
+	    user.setNom(userName);
+	    user.setLogin(userLogin);
+	    user.setPassword(userPassword);
+
+	    // Call the create method
+	    userInterface.create(user);
+
+	    // Reset field values
+	    userName = null;
+	    userLogin = null;
+	    userPassword = null;
+
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "L'utilisateur a été créé avec succès."));
+	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	    try {
+	    	PrimeFaces.current().ajax().update(":form:userTable"); // Refresh the user table
+	        externalContext.redirect(externalContext.getRequestContextPath() + "/pages/user.xhtml");
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public void selectUserForEdit(User user) {
+	    this.selectedUser = user;
+	}
+
+	public void editUser(User user) {
+	    userInterface.update(user);
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "L'utilisateur a été modifié avec succès."));
+
+	    selectedUser = null;
+
+	    PrimeFaces.current().ajax().update(":form:userTable");
+
+	    PrimeFaces.current().executeScript("PF('editDialog').hide();");
+	}
+
+	public void deleteUser(User user) {
+	    this.selectedUserToDelete = user;
+	}
+
+	public void confirmDeleteUser() {
+	    if (this.selectedUserToDelete != null) {
+	        userInterface.remove(selectedUserToDelete.getId());
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User deleted successfully.", null));
+	        this.selectedUserToDelete = null;
+
+	        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	        try {
+	            externalContext.redirect(externalContext.getRequestContextPath() + "/pages/user.xhtml");
+	            PrimeFaces.current().ajax().update(":form:userTable"); // Refresh the user table
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
 
 
 	public void login() {
 		User user = userInterface.Login(userLogin, userPassword);
 	    
 	   if (user != null) {
-	    	try {
+
+		   try {
 	            FacesContext context = FacesContext.getCurrentInstance();
 	            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 	            context.getExternalContext().redirect(request.getContextPath() + "/pages/home.xhtml");
 	            
-	            //sauvegarde de l'id de l'utilisateur
 	            ExternalContext externalContext = context.getExternalContext();
 	            HttpSession session = (HttpSession) externalContext.getSession(false);
-				session.setAttribute("userId", user.getId());
-				userName = user.getNom();
-				userLogin=user.getLogin();
-				userPassword=user.getPassword();
+	            
+	            // Sauvegarde de l'id de l'utilisateur et du nom dans la session
+	            session.setAttribute("userId", user.getId());
+	            session.setAttribute("userName", user.getNom());
+	            
+	            userName = (String) session.getAttribute("userName");
+	            System.out.println("Nom de l'utilisateur connecté : " + userName);
+	            
+	            userLogin = user.getLogin();
+	            userPassword = user.getPassword();
+	            
 	        } catch (IOException e) {
 	            e.printStackTrace(); 
 	        }
@@ -139,13 +214,6 @@ public class UserTraitement implements Serializable {
 	    }
     }
 	
-	public void loadUser() { 
-	    User user = userInterface.getUser(userId);
-
-	    userName = user.getNom();
-	    userLogin = user.getLogin();
-	    userPassword = user.getPassword();
-	}
 	
 	public void edit() {
 	    FacesContext context = FacesContext.getCurrentInstance();
@@ -176,11 +244,13 @@ public class UserTraitement implements Serializable {
 	    try {
 	        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 	        HttpSession session = (HttpSession) externalContext.getSession(false);
+	        session.removeAttribute("userName");
 	        session.invalidate();
 	        externalContext.redirect(externalContext.getRequestContextPath() + "/pages/connexion.xhtml");
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	}
-
+	
 }
+	

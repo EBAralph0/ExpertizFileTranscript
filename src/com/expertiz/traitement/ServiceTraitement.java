@@ -133,6 +133,7 @@ public class ServiceTraitement implements Serializable {
 
         PrimeFaces.current().ajax().update(":form:settingTable");
 
+        // Cacher le dialogue d'édition
         PrimeFaces.current().executeScript("PF('editDialog').hide();");
 
     }

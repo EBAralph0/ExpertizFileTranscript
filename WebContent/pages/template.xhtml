@@ -41,28 +41,33 @@
                 <h:graphicImage value="/images/logo.png" class="logo-img" />
             </p:commandLink>
         </div>
-        <p:menubar>
-            <p:submenu label="File" icon="pi pi-file" style="width:inherit">
-                <p:submenu label="New" icon="pi pi-briefcase">
-                    <p:menuitem value="File" url="#" />
-                    <p:menuitem value="Folder" url="#" />
-                </p:submenu>
-                <p:submenu label="Old" icon="pi pi-briefcase">
-                    <p:menuitem value="File" url="#" />
-                    <p:menuitem value="Folder" url="#" />
-                </p:submenu>
-            </p:submenu>
- 
-            <p:submenu label="Setting" icon="pi pi-cog">
-                <p:menuitem value="Edit" url="editsetting.xhtml" icon="pi pi-angle-double-left" />
-                <p:menuitem value="Treatment" url="setting.xhtml" icon="pi pi-angle-double-left" />
-            </p:submenu>
- 
-            <f:facet name="options">
-                <p:outputLabel value="Welcome, #{userTraitement.userName} " style="margin-right: 10px;" />
-                <p:commandButton value="Logout" icon="pi pi-home" action="#{userTraitement.logout}" />
-            </f:facet>
-        </p:menubar>
+       <p:menubar>
+    <p:submenu label="File" icon="pi pi-file" style="width:inherit">
+        <p:submenu label="New" icon="pi pi-briefcase">
+            <p:menuitem value="File" url="#" />
+            <p:menuitem value="Folder" url="#" />
+        </p:submenu>
+        <p:submenu label="Old" icon="pi pi-briefcase">
+            <p:menuitem value="File" url="#" />
+            <p:menuitem value="Folder" url="#" />
+        </p:submenu>
+    </p:submenu>
+
+    <p:submenu label="Setting" icon="pi pi-cog">
+        <p:menuitem value="My space" url="editsetting.xhtml" icon="pi pi-angle-double-left" />
+        <p:menuitem value="Settings" url="setting.xhtml" icon="pi pi-angle-double-left" />
+        <p:menuitem value="Users" url="user.xhtml" icon="pi pi-angle-double-left" />
+    </p:submenu>
+
+    <f:facet name="options">
+        <p:outputLabel value="Welcome, " style="margin-right: 10px;" />
+        <h:outputText value="#{userTraitement.userName}" />
+        <p:outputLabel value="Welcome, #{userTraitement.userName}" style="margin-right: 10px;" />
+
+        <p:commandButton value="Logout" icon="pi pi-home" action="#{userTraitement.logout}" />
+    </f:facet>
+</p:menubar>
+
     </div>
     <ui:insert name="content"/>
     <script type="text/javascript">
@@ -72,6 +77,17 @@
 
         cleInput.value = cle;
         valeurInput.value = valeur;
+
+        PF('editDialog').show();
+    }
+    function openUserEditDialog(nom, login, password) {
+        var nomInput = document.getElementById('editForm:editNom');
+        var loginInput = document.getElementById('editForm:editLogin');
+        var passwordInput = document.getElementById('editForm:editPassword');
+
+        nomInput.value = nom;
+        loginInput.value = login;
+        passwordInput.value = password;
 
         PF('editDialog').show();
     }

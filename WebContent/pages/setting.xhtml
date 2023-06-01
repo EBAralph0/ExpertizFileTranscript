@@ -39,10 +39,10 @@
 								icon="pi pi-pencil"
 								onclick="openEditDialog('#{setting.cle}', '#{setting.valeur}')" >
 
-							<f:setPropertyActionListener
-								target="#{serviceTraitement.selectedSetting}" value="#{setting}" />
-							<p:ajax
-								listener="#{serviceTraitement.selectSettingForEdit(setting)}" />
+								<f:setPropertyActionListener
+									target="#{serviceTraitement.selectedSetting}" value="#{setting}" />
+								<p:ajax
+									listener="#{serviceTraitement.selectSettingForEdit(setting)}" />
 							</p:commandButton>
 
 
