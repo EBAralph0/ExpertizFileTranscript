@@ -37,7 +37,7 @@
     <p:growl id="messages"/>
     <div class="content-logo-menu">
         <div class="logo-bar">
-            <p:commandLink class="logo-img" action="/pages/home.xhtml">
+            <p:commandLink class="logo-img" action="/pages/setting.xhtml">
                 <h:graphicImage value="/images/logo.png" class="logo-img" />
             </p:commandLink>
         </div>
@@ -60,11 +60,8 @@
     </p:submenu>
 
     <f:facet name="options">
-        <p:outputLabel value="Welcome, " style="margin-right: 10px;" />
-        <h:outputText value="#{userTraitement.userName}" />
-        <p:outputLabel value="Welcome, #{userTraitement.userName}" style="margin-right: 10px;" />
-
-        <p:commandButton value="Logout" icon="pi pi-home" action="#{userTraitement.logout}" />
+        <p:outputLabel value="Welcome, #{authentification.userName}" style="margin-right: 10px;" />
+        <p:commandButton value="Logout" icon="pi pi-home" action="#{authentification.logout}" />
     </f:facet>
 </p:menubar>
 

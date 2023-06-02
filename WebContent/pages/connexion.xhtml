@@ -57,13 +57,13 @@
 		    
 		    <p:panelGrid columns="2" styleClass="ui-fluid" style="border: none;">
 			    <p:outputLabel for="login" value="Login:" />
-			    <p:inputText id="login" value="#{userTraitement.userLogin}" required="true" />
+			    <p:inputText id="login" value="#{authentification.userLogin}" required="true" />
 			
 			    <p:outputLabel for="password" value="Mot de passe:" />
-			    <p:password id="password" value="#{userTraitement.userPassword}" required="true" />
+			    <p:password id="password" value="#{authentification.userPassword}" required="true" />
 			</p:panelGrid>
 
-		    <p:commandButton value="Se connecter" action="#{userTraitement.login}" />
+		    <p:commandButton value="Se connecter" action="#{authentification.login}" />
 
 		</h:form>
 	 </div>	

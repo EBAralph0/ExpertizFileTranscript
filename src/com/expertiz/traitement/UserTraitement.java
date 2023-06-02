@@ -177,42 +177,7 @@ public class UserTraitement implements Serializable {
 	}
 
 
-	public void login() {
-		User user = userInterface.Login(userLogin, userPassword);
-	    
-	   if (user != null) {
-
-		   try {
-	            FacesContext context = FacesContext.getCurrentInstance();
-	            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-	            context.getExternalContext().redirect(request.getContextPath() + "/pages/home.xhtml");
-	            
-	            ExternalContext externalContext = context.getExternalContext();
-	            HttpSession session = (HttpSession) externalContext.getSession(false);
-	            
-	            // Sauvegarde de l'id de l'utilisateur et du nom dans la session
-	            session.setAttribute("userId", user.getId());
-	            session.setAttribute("userName", user.getNom());
-	            
-	            userName = (String) session.getAttribute("userName");
-	            System.out.println("Nom de l'utilisateur connecté : " + userName);
-	            
-	            userLogin = user.getLogin();
-	            userPassword = user.getPassword();
-	            
-	        } catch (IOException e) {
-	            e.printStackTrace(); 
-	        }
-	    } else {
-	    	 // Erreur de connexion, affichage du message d'erreur
-	        String errorMessage = "Identifiant ou mot de passe incorrect";
-	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur de connexion", errorMessage));
-	        
-	        // Appel d'une fonction JavaScript pour afficher le message d'erreur
-	        String script = "showErrorMessage('" + errorMessage + "');";
-	        PrimeFaces.current().executeScript(script);
-	    }
-    }
+	
 	
 	
 	public void edit() {
@@ -240,17 +205,7 @@ public class UserTraitement implements Serializable {
 	    }
 	}
 	
-	public void logout() {
-	    try {
-	        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-	        HttpSession session = (HttpSession) externalContext.getSession(false);
-	        session.removeAttribute("userName");
-	        session.invalidate();
-	        externalContext.redirect(externalContext.getRequestContextPath() + "/pages/connexion.xhtml");
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
+	
 	
 }
 	

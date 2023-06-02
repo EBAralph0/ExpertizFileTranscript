@@ -6,7 +6,9 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h1>HOME</h1>
+        <h1>Welcome back, #{authentification.userName}</h1>
+
+        <p>#{authentification.getAllUserInfo(authentification.userId).nom}</p>
     </ui:define>
 
 </ui:composition>
