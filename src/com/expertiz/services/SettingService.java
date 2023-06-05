@@ -54,6 +54,14 @@ public class SettingService implements SettingInterface {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public List<Setting> searchSettings(String keyword) {
+		TypedQuery<Setting> query = em.createQuery("SELECT s FROM Setting s WHERE s.cle LIKE :keyword", Setting.class);
+        query.setParameter("keyword", "%" + keyword + "%");
+        return query.getResultList();
+		
+	}
     
     
 

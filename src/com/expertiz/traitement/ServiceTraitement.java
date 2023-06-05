@@ -2,6 +2,7 @@ package com.expertiz.traitement;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ListenerFor;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,14 +90,34 @@ public class ServiceTraitement implements Serializable {
 	
 	private List<Setting> allSettings;
 	
+	private String filterKeyword;
+
+	public String getFilterKeyword() {
+		return filterKeyword;
+	}
+
+	public void setFilterKeyword(String filterKeyword) {
+		this.filterKeyword = filterKeyword;
+	}
+	
+	private List<Setting> filteredSettings;
 	
 
-    public List<Setting> getAllSettings() {
-        if (allSettings == null) {
-            allSettings = settingInterface.getAllSetting();
-        }
-        return allSettings;
-    }
+	public List<Setting> getFilteredSettings() {
+		return filteredSettings;
+	}
+
+	public void setFilteredSettings(List<Setting> filteredSettings) {
+		this.filteredSettings = filteredSettings;
+	}
+
+	public List<Setting> getAllSettings() {
+	    if (allSettings == null) {
+	        allSettings = settingInterface.getAllSetting();
+	    }
+	    return allSettings;
+	}
+
 	public void createSetting() {
 	    if (cle == null || valeur == null || cle.isEmpty() || valeur.isEmpty()) {
 	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Veuillez remplir tous les champs."));
@@ -156,11 +178,34 @@ public class ServiceTraitement implements Serializable {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("******************************");
+            System.out.println("NULL SETTING");
         }
     }
 
+    public void filterData() {
+    	String keyword = filterKeyword;
+        // Réinitialiser la liste des paramètres pour afficher tous les éléments
+        allSettings = settingInterface.getAllSetting();
 
-    
+        // Appliquer le filtre sur la liste des paramètres
+        filteredSettings = allSettings;
+        filteredSettings = new ArrayList<>();
+        for (Setting setting : allSettings) {
+            if (setting.getCle().contains(keyword) ||
+                setting.getValeur().contains(keyword)) {
+                filteredSettings.add(setting);
+            }
+        }
 
+        // Vérifier si aucun filtre n'est appliqué
+        if (keyword.isEmpty()) {
+            // Aucun filtre, afficher toutes les données
+            filteredSettings = allSettings;
+        }
+
+        // Mettre à jour la liste des paramètres avec les éléments filtrés
+        setFilteredSettings(filteredSettings);
+    }
+
+   
 }

@@ -16,15 +16,36 @@
 	background-color: red;
 	color: white;
 }
+
+.content_add_research {
+	display: flex;
+	justify-content: space-between;
+}
 </style>
+
 		<div class="content-all-crud">
-			<div class="create-btn-container">
-				<p:commandButton value="+ Add" onclick="PF('createDialog').show()" />
-			</div>
+
 			<div class="list-setting-container">
 				<h:form id="form">
+					<div class="content_add_research">
+						<div class="create-btn-container">
+							<p:commandButton value="+ Add"
+								onclick="PF('createDialog').show()" />
+						</div>
+						<div class="search-container">
+							<p:inputText id="filterInput"
+								value="#{serviceTraitement.filterKeyword}">
+								<p:ajax event="keyup" listener="#{serviceTraitement.filterData}"
+									update="settingTable" />
+							</p:inputText>
+
+						</div>
+					</div>
 					<p:dataTable id="settingTable" widgetVar="settingTable"
-						value="#{serviceTraitement.allSettings}" var="setting">
+						value="#{serviceTraitement.filteredSettings}" var="setting"
+						rows="5" paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
 						<p:column headerText="ID">
 							<h:outputText value="#{setting.id}" />
 						</p:column>
@@ -37,10 +58,11 @@
 						<p:column headerText="Actions">
 							<p:commandButton value="Modifier" styleClass="edit-button"
 								icon="pi pi-pencil"
-								onclick="openEditDialog('#{setting.cle}', '#{setting.valeur}')" >
+								onclick="openEditDialog('#{setting.cle}', '#{setting.valeur}')">
 
 								<f:setPropertyActionListener
-									target="#{serviceTraitement.selectedSetting}" value="#{setting}" />
+									target="#{serviceTraitement.selectedSetting}"
+									value="#{setting}" />
 								<p:ajax
 									listener="#{serviceTraitement.selectSettingForEdit(setting)}" />
 							</p:commandButton>

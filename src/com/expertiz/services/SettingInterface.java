@@ -16,5 +16,6 @@ public interface SettingInterface {
     public Setting getSetting(int id);
     public List<Setting> getAllSetting();
 	public long count();
+	public List<Setting> searchSettings(String keyword);
 	
 }
